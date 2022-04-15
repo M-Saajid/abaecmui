@@ -254,7 +254,7 @@ function HomePage() {
         <Box
           mt={20}
           sx={{
-            border: "1px 1px 0px 1px solid rgba(224, 97, 118, 0.205)",
+           
             backgroundColor: " rgba(184, 147, 149, 0.13)",
             marginBottom: "50px"
           }}

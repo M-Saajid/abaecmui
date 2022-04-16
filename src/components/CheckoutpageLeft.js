@@ -1,6 +1,7 @@
 import { Container, Divider, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
+import CheckoutCard from "./CheckoutCard";
 import CollectionCard from "./CollectionCard";
 
 function CheckoutpageLeft() {
@@ -13,20 +14,22 @@ function CheckoutpageLeft() {
   );
   const product = (
     <Box ml={"20px"}>
-      <Container>
+      <Container sx={{marginTop:"15px"}}>
         <Typography variant="h6">Thank for choosing ABAEC .</Typography>
         <Typography variant="h6">Your Products,</Typography>
       </Container>
-      <CollectionCard />
-      <CollectionCard />
-      <CollectionCard />
-      <CollectionCard />
+     <CheckoutCard/>
+     <CheckoutCard/>
+     <CheckoutCard/>
+     <CheckoutCard/>
+     <CheckoutCard/>
+     <CheckoutCard/>
     </Box>
   );
   return (
     <Box>
-      <Typography variant="h3">Hello</Typography>
-      <Divider />
+      <Typography variant="h3">Hello SK</Typography>
+      <Divider  />
       {basket.length < 0 ? subtitle : product}
     </Box>
   );

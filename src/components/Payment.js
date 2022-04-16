@@ -1,5 +1,7 @@
 import { Box, Container, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
+import CheckoutCard from "./CheckoutCard";
+import CollectionCard from "./CollectionCard";
 
 function Payment() {
   return (
@@ -21,6 +23,16 @@ function Payment() {
       <Divider />
       <Box>
         <Typography variant="h6">Review Items</Typography>
+        <Box
+          container
+          display="flex"
+          direction="row"
+          alignItems="center"
+          position="relative"
+          flexWrap="wrap"
+        >
+          <CheckoutCard />
+        </Box>
       </Box>
       <Divider />
       <Box>

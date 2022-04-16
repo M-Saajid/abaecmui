@@ -192,7 +192,7 @@ function HeaderTop() {
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           {authButton}
-          {authAvatar}
+          {/* {authAvatar} */}
         </Toolbar>
       </AppBar>
     </div>

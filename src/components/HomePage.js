@@ -155,16 +155,10 @@ function HomePage() {
           position="relative"
           flexWrap="wrap"
           sx={{
-<<<<<<< HEAD
-           
-            backgroundColor: " rgba(184, 147, 149, 0.13)",
-            marginBottom: "50px"
-=======
             "& > :not(style)": {
               width: 300,
               height: 500
             }
->>>>>>> feature
           }}
         >
           <Paper

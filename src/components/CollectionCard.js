@@ -17,14 +17,7 @@ function CollectionCard(props) {
     theme.colorScheme === "dark" ? theme.colors.dark[1] : theme.colors.gray[7];
 
   return (
-    <Box
-      mt={5}
-      sx={{
-        width: 340,
-        marginLeft: "auto",
-        marginRight: "auto"
-      }}
-    >
+    <Box mt={5} ml={"auto"} mr={"auto"} width="300px">
       <Card shadow="sm" p="lg">
         <Card.Section>
           <Image

@@ -143,9 +143,7 @@ function HomePage() {
             </Image>
           </ImageButton>
         </Box>
-        {/* <Grid container spacing={8}> */}
-        {/* <Grid item xs={12}> */}
-        {/* --------------------------------------------- */}
+
         <Box
           mt={8}
           container
@@ -245,9 +243,6 @@ function HomePage() {
             </Container>
           </Paper>
         </Box>
-        {/* </Grid> */}
-        {/* </Grid> */}
-        {/* ------------------------------------------------------------------------------------ */}
         <Box
           mt={20}
           bgcolor="rgba(184, 147, 149, 0.13)"

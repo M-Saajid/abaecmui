@@ -112,11 +112,13 @@ function Register() {
       mt={20}
       border={"1px solid black"}
     >
-      <img
-        className={classes.logo}
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuirahyitgSIy78EwdM52Lw9dM1aJ7sstWbXJTW5Kq1DQi8I33UdEaTnHzKPCMwTq1ePI&usqp=CAU"
-        alt="/"
-      />
+      <Container ml="" mr="100" >
+        <img
+          className={classes.logo}
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuirahyitgSIy78EwdM52Lw9dM1aJ7sstWbXJTW5Kq1DQi8I33UdEaTnHzKPCMwTq1ePI&usqp=CAU"
+          alt="/"
+        />
+      </Container>
 
       <Box mb={5}>
         <Container>
@@ -135,6 +137,7 @@ function Register() {
               sx={{ m: 1, width: "25ch" }}
               onChange={handleChange("email")}
             />
+
             <TextField
               className={classes.textField}
               id="outlined-basic"
@@ -143,62 +146,65 @@ function Register() {
               variant="outlined"
               size="small"
             />
-            <Popover
-              shadow="lg"
-              opened={popoverOpened}
-              position="bottom"
-              placement="start"
-              styles={{ popover: { width: "100%" } }}
-              trapFocus={false}
-              transition="pop-top-left"
-              onFocusCapture={() => setPopoverOpened(true)}
-              onBlurCapture={() => setPopoverOpened(false)}
-              target={
-                <TextField
-                  className={classes.textField}
-                  id="outlined-basic"
-                  label="Password"
-                  variant="outlined"
-                  size="small"
-                  type={details.showPassword ? "text" : "password"}
-                  value={details.password}
-                  onChange={handleChange("password")}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {details.showPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-              }
-            >
-              <Progress
-                color={color}
-                value={strength}
-                size={5}
-                style={{ marginBottom: 10 }}
-              />
-              <PasswordRequirement
-                label="Includes at least 6 characters"
-                meets={details.password.length > 5}
-              />
-              {checks}
-            </Popover>
           </Stack>
+          <Popover
+            shadow="lg"
+            opened={popoverOpened}
+            position="bottom"
+            placement="start"
+            styles={{ popover: { width: "100%" } }}
+            trapFocus={false}
+            transition="pop-top-left"
+            onFocusCapture={() => setPopoverOpened(true)}
+            onBlurCapture={() => setPopoverOpened(false)}
+            target={
+              <TextField
+                className={classes.textField}
+                id="outlined-basic"
+                label="Password"
+                variant="outlined"
+                size="small"
+                sx={{marginLeft:"auto",marginRight:"50px"}}
+                type={details.showPassword ? "text" : "password"}
+                value={details.password}
+                onChange={handleChange("password")}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {details.showPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            }
+          >
+            <Progress
+              color={color}
+              value={strength}
+              size={5}
+              style={{ marginBottom: 10 }}
+            />
+            <PasswordRequirement
+              label="Includes at least 6 characters"
+              meets={details.password.length > 5}
+            />
+            {checks}
+          </Popover>
+
+          <Container>
+            <Button variant="contained">Register</Button>
+          </Container>
         </Container>
       </Box>
-
-      <Button variant="contained">Register</Button>
     </Box>
   );
 }

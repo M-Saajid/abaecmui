@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Drawer } from "@mantine/core";
 import {
   Avatar,
   Button,
@@ -17,10 +18,16 @@ import { styled, alpha } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import { NavLink } from "react-router-dom";
+import Login from "./Login";
+import Register from "./Register";
+
 
 function HeaderTop() {
+  const userName = "";
   const pages = ["Login", "Register"];
   const settings = ["Account", "Logout"];
+  const [opened, setOpened] = useState(false);
+  const [pageView, setPageView] = useState();
   const [auth, setAuth] = useState("false");
   const navLink = ({ isActive }) => {
     return {
@@ -87,11 +94,30 @@ function HeaderTop() {
       }
     }
   }));
+  const check = () => {
+    if (userName === "admin1200") {
+      alert("im admin");
+    } else {
+      alert("im user");
+    }
+  };
+  const login = () => {
+    setPageView(true);
+    setOpened(true);
+  };
 
+  const create = () => {
+    setPageView(false);
+    setOpened(true);
+  };
   const authButton = (
     <Box sx={{ flexGrow: 0, mb: 1.5, display: { xs: "none", md: "flex" } }}>
-      <Button color="inherit">Login</Button>
-      <Button color="inherit">Register</Button>
+      <Button color="inherit" onClick={check}>
+        Login
+      </Button>
+      <Button color="inherit" onClick={create}>
+        Register
+      </Button>
     </Box>
   );
   const authAvatar = (
@@ -203,9 +229,20 @@ function HeaderTop() {
             </Search>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
-          {auth? authButton : authAvatar}
+          {auth ? authButton : authAvatar}
         </Toolbar>
       </AppBar>
+      <Drawer
+        position="right"
+        opened={userName ? false : opened}
+        transition="rotate-left"
+        transitionDuration={550}
+        transitionTimingFunction="ease"
+        onClose={() => setOpened(false)}
+        size="800px"
+      >
+        {pageView ? <Login /> : <Register />}
+      </Drawer>
     </div>
   );
 }

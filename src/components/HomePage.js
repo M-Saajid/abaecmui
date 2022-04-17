@@ -164,6 +164,7 @@ function HomePage() {
           <Paper
             className={classes.heroCards}
             sx={{
+              boxShadow: 100,
               backgroundSize: "cover",
               marginBottom: "15px",
               marginLeft: "auto",
@@ -191,6 +192,7 @@ function HomePage() {
           <Paper
             className={classes.heroCards}
             sx={{
+              boxShadow: 100,
               backgroundSize: "cover",
               marginBottom: "15px",
               marginLeft: "auto",
@@ -219,6 +221,7 @@ function HomePage() {
           <Paper
             className={classes.heroCards}
             sx={{
+              boxShadow: 100,
               backgroundSize: "cover",
               marginBottom: "15px",
               marginLeft: "auto",

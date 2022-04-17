@@ -21,7 +21,6 @@ import { NavLink } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
 
-
 function HeaderTop() {
   const userName = "";
   const pages = ["Login", "Register"];
@@ -106,18 +105,14 @@ function HeaderTop() {
     setOpened(true);
   };
 
-  const create = () => {
-    setPageView(false);
-    setOpened(true);
-  };
   const authButton = (
     <Box sx={{ flexGrow: 0, mb: 1.5, display: { xs: "none", md: "flex" } }}>
-      <Button color="inherit" onClick={check}>
-        Login
-      </Button>
-      <Button color="inherit" onClick={create}>
-        Register
-      </Button>
+      <NavLink style={navLink} to="/login">
+        <Button color="inherit">Login</Button>
+      </NavLink>
+      <NavLink style={navLink} to="/register">
+        <Button color="inherit">Register</Button>
+      </NavLink>
     </Box>
   );
   const authAvatar = (
@@ -232,17 +227,6 @@ function HeaderTop() {
           {auth ? authButton : authAvatar}
         </Toolbar>
       </AppBar>
-      <Drawer
-        position="right"
-        opened={userName ? false : opened}
-        transition="rotate-left"
-        transitionDuration={550}
-        transitionTimingFunction="ease"
-        onClose={() => setOpened(false)}
-        size="800px"
-      >
-        {pageView ? <Login /> : <Register />}
-      </Drawer>
     </div>
   );
 }

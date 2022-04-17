@@ -31,7 +31,7 @@ function Payment() {
           position="relative"
           flexWrap="wrap"
         >
-          <CheckoutCard />
+          {/* <CheckoutCard /> */}
         </Box>
       </Box>
       <Divider />

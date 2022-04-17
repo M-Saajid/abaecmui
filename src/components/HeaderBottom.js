@@ -9,6 +9,7 @@ import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Grid, Link, makeStyles, Paper, Box, styled } from "@material-ui/core";
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useStateValue } from "../store/StateProvider";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -32,6 +33,7 @@ const navLink = ({ isActive }) => {
 };
 function HeaderBottom() {
   const classes = useStyles();
+  const [{ basket }] = useStateValue();
 
   return (
     <>
@@ -69,6 +71,7 @@ function HeaderBottom() {
           <NavLink style={navLink} to="/checkout">
             <IconButton disableRipple sx={{ marginRight: "30px" }}>
               <ShoppingBasketIcon className={classes.colour} />
+              <Typography color={"white"}>{basket?.length}</Typography>
             </IconButton>
           </NavLink>
         </Grid>

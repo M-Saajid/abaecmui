@@ -3,11 +3,11 @@ import {
   Link,
   makeStyles,
   Paper,
-  Box,
   styled,
   TextField,
   InputAdornment
 } from "@material-ui/core";
+import Box from "@mui/material/Box";
 import React, { useState } from "react";
 import {
   Button,
@@ -43,12 +43,8 @@ function Login() {
   };
   const useStyles = makeStyles((theme) =>
     createStyles({
-      gird: { backgroundColor: "#616161", height: "60px" },
       logo: {
         width: 100
-      },
-      colour: {
-        color: "white"
       },
       textField: {
         marginLeft: "auto",
@@ -111,7 +107,8 @@ function Login() {
       ml="auto"
       mr="auto"
       mt={20}
-      border={"1px solid black"}
+      border={"2px solid black"}
+      sx={{ boxShadow: 10 }}
     >
       <img
         className={classes.logo}

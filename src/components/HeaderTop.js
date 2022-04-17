@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -16,10 +16,20 @@ import { Box } from "@mui/system";
 import { styled, alpha } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import { NavLink } from "react-router-dom";
 
 function HeaderTop() {
   const pages = ["Login", "Register"];
   const settings = ["Account", "Logout"];
+  const [auth, setAuth] = useState("false");
+  const navLink = ({ isActive }) => {
+    return {
+      textDecoration: isActive ? "none" : "none",
+      color: isActive
+        ? "rgba(255, 255, 255, 0.836)"
+        : "rgba(255, 255, 255, 0.836)"
+    };
+  };
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -128,19 +138,21 @@ function HeaderTop() {
         sx={{ height: "45px", backgroundColor: "rgb(1, 1, 26)" }}
       >
         <Toolbar>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{
-              cursor: "pointer",
-              mb: 2,
-              mr: 2,
-              display: { xs: "none", md: "flex" }
-            }}
-          >
-            ABAEC
-          </Typography>
+          <NavLink style={navLink} to="/">
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{
+                cursor: "pointer",
+                mb: 2,
+                mr: 2,
+                display: { xs: "none", md: "flex" }
+              }}
+            >
+              ABAEC
+            </Typography>
+          </NavLink>
 
           <Box sx={{ flexGrow: 1, mb: 3, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -191,8 +203,7 @@ function HeaderTop() {
             </Search>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
-          {authButton}
-          {/* {authAvatar} */}
+          {auth? authButton : authAvatar}
         </Toolbar>
       </AppBar>
     </div>

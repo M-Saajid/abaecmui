@@ -8,6 +8,7 @@ import {
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import { Grid, Link, makeStyles, Paper, Box, styled } from "@material-ui/core";
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -21,6 +22,14 @@ const useStyles = makeStyles((theme) =>
     }
   })
 );
+const navLink = ({ isActive }) => {
+  return {
+    textDecoration: isActive ? "none" : "none",
+    color: isActive
+      ? "rgba(255, 255, 255, 0.836)"
+      : "rgba(255, 255, 255, 0.836)"
+  };
+};
 function HeaderBottom() {
   const classes = useStyles();
 
@@ -57,10 +66,11 @@ function HeaderBottom() {
           </Stack>
         </Grid>
         <Grid item>
-          {" "}
-          <IconButton disableRipple sx={{ marginRight: "30px" }}>
-            <ShoppingBasketIcon className={classes.colour} />
-          </IconButton>
+          <NavLink style={navLink} to="/checkout">
+            <IconButton disableRipple sx={{ marginRight: "30px" }}>
+              <ShoppingBasketIcon className={classes.colour} />
+            </IconButton>
+          </NavLink>
         </Grid>
       </Grid>
       {/* </Container> */}

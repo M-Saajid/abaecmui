@@ -11,10 +11,15 @@ import {
 } from "@mantine/core";
 import { Rating } from "@mui/material";
 import { Box } from "@mui/system";
+
+
+
 function CheckoutCard() {
   const theme = useMantineTheme();
   const secondaryColor =
     theme.colorScheme === "dark" ? theme.colors.dark[1] : theme.colors.gray[7];
+
+
   return (
     <Box mt={5} ml={"auto"} mr={"auto"} width="300px">
       <Card shadow="sm" p="lg">

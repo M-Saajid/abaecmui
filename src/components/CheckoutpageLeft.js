@@ -16,7 +16,7 @@ function CheckoutpageLeft() {
     <Box ml={"20px"}>
       <Container sx={{marginTop:"15px"}}>
         <Typography variant="h6">Thank for choosing ABAEC .</Typography>
-        <Typography variant="h6">Your Products,</Typography>
+        <Typography variant="h6">Your Cart,</Typography>
       </Container>
      <CheckoutCard/>
      <CheckoutCard/>

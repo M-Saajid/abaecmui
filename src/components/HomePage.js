@@ -9,6 +9,7 @@ import {
 import ButtonBase from "@mui/material/ButtonBase";
 import { makeStyles, Box, styled, CssBaseline } from "@material-ui/core";
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: "relative",
@@ -122,26 +123,27 @@ function HomePage() {
             new delightful experince . with new fashion way ,collect your simple
             outfit.
           </Typography>
-
-          <ImageButton focusRipple>
-            <ImageBackdrop className="MuiImageBackdrop-root" />
-            <Image>
-              <Typography
-                component="span"
-                variant="subtitle1"
-                color="inherit"
-                sx={{
-                  position: "relative",
-                  p: 4,
-                  pt: 2,
-                  pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
-                }}
-              >
-                Collections
-                <ImageMarked className="MuiImageMarked-root" />
-              </Typography>
-            </Image>
-          </ImageButton>
+          <NavLink to="/collections">
+            <ImageButton focusRipple>
+              <ImageBackdrop className="MuiImageBackdrop-root" />
+              <Image>
+                <Typography
+                  component="span"
+                  variant="subtitle1"
+                  color="inherit"
+                  sx={{
+                    position: "relative",
+                    p: 4,
+                    pt: 2,
+                    pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
+                  }}
+                >
+                  Collections
+                  <ImageMarked className="MuiImageMarked-root" />
+                </Typography>
+              </Image>
+            </ImageButton>
+          </NavLink>
         </Box>
 
         <Box

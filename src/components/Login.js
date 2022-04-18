@@ -1,20 +1,34 @@
 import { makeStyles, TextField, InputAdornment } from "@material-ui/core";
 import Box from "@mui/material/Box";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Container,
   createStyles,
   CssBaseline,
   IconButton,
-  Stack,
-  Typography
+  Stack
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { CheckIcon, Cross1Icon } from "@modulz/radix-icons";
-import { PasswordInput, Progress, Text, Popover } from "@mantine/core";
+import { Check, Visibility, VisibilityOff } from "@mui/icons-material";
+import validate from "../validations/Login";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from "@material-ui/core";
+import { useNotifications } from "@mantine/notifications";
 
 function Login() {
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [open, setOpen] = useState(false);
+  const notifications = useNotifications();
+  const navigate = useNavigate();
+
   const [details, setDetails] = useState({
     username: "",
     password: "",
@@ -33,6 +47,14 @@ function Login() {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  const handlesubmit = (e) => {
+    setErrors(validate(details));
+    setIsSubmitting(true);
+    // auth.login(details.username);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   const useStyles = makeStyles((theme) =>
     createStyles({
       logo: {
@@ -45,51 +67,67 @@ function Login() {
       }
     })
   );
-  function PasswordRequirement(_a) {
-    var meets = _a.meets,
-      label = _a.label;
-    return (
-      <Text
-        color={meets ? "teal" : "red"}
-        sx={{ display: "flex", alignItems: "center" }}
-        mt={7}
-        size="sm"
-      >
-        {meets ? <CheckIcon /> : <Cross1Icon />} <Box ml={10}>{label}</Box>
-      </Text>
-    );
-  }
-  const requirements = [
-    { re: /[0-9]/, label: "Includes number" },
-    { re: /[a-z]/, label: "Includes lowercase letter" },
-    { re: /[A-Z]/, label: "Includes uppercase letter" },
-    { re: /[$&+,:;=?@#|'<>.^*()%!-]/, label: "Includes special symbol" }
-  ];
-  function getStrength(password) {
-    let multiplier = password.length > 5 ? 0 : 1;
+  useEffect(() => {
+    // check if any validation errors are present
+    async function fetchData() {
+      if (Object.keys(errors).length === 0 && isSubmitting) {
+        try {
+          const response = await axios.post(" http://localhost:5000/login", {
+            username: details.username,
+            password: details.password
+          });
+          notifications.showNotification({
+            title: "Successfully login ",
+            message: "Welcome to ABAEC !",
+            icon: <Check size={18} />,
+            autoClose: 1000,
+            color: "teal"
+          });
 
-    requirements.forEach((requirement) => {
-      if (!requirement.re.test(password)) {
-        multiplier += 1;
+          localStorage.setItem("jwt", "Bearer " + response.data.token);
+          localStorage.setItem("user", response.data.data);
+
+          // auth.login(response.data.data);
+          const results = await axios.post(
+            "http://localhost:5000/api/searchcus",
+            {
+              username: details.username
+            }
+          );
+
+          console.log("user email", results.data.results[0].email);
+          localStorage.setItem("email", results.data.results[0].email);
+
+          navigate("/collections");
+        } catch (error) {
+          setOpen(true);
+        }
       }
-    });
+    }
+    fetchData();
+  }, [errors]);
 
-    return Math.max(100 - (100 / (requirements.length + 1)) * multiplier, 10);
-  }
-  const [popoverOpened, setPopoverOpened] = useState(false);
-  const [value, setValue] = useState("");
-  const checks = requirements.map((requirement, index) => (
-    <PasswordRequirement
-      key={index}
-      label={requirement.label}
-      meets={requirement.re.test(details.password)}
-    />
-  ));
-
-  const strength = getStrength(details.password);
-  const color = strength === 100 ? "teal" : strength > 50 ? "yellow" : "red";
+  const alert = (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{"Access denied "}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          Username or Password Invalid , Please check !
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Ok</Button>
+      </DialogActions>
+    </Dialog>
+  );
 
   const classes = useStyles();
+
   return (
     // <Box position={"reative"}>
     <Box
@@ -117,63 +155,43 @@ function Login() {
               label="username"
               name="username"
               variant="outlined"
-              size="large"
+              size="medium"
+              onChange={handleChange("username")}
+              error={errors.username && true}
+              helperText={errors.username && "Username Required !"}
             />
-            <Popover
-              shadow="lg"
-              opened={popoverOpened}
-              position="bottom"
-              placement="start"
-              styles={{ popover: { width: "100%" } }}
-              trapFocus={false}
-              transition="pop-top-left"
-              onFocusCapture={() => setPopoverOpened(true)}
-              onBlurCapture={() => setPopoverOpened(false)}
-              target={
-                <TextField
-                  className={classes.textField}
-                  id="outlined-basic"
-                  label="Password"
-                  variant="outlined"
-                  size="medium"
-                  type={details.showPassword ? "text" : "password"}
-                  value={details.password}
-                  onChange={handleChange("password")}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                        edge="end"
-                      >
-                        {details.showPassword ? (
-                          <VisibilityOff />
-                        ) : (
-                          <Visibility />
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
+
+            <TextField
+              className={classes.textField}
+              id="outlined-basic"
+              label="Password"
+              variant="outlined"
+              size="medium"
+              type={details.showPassword ? "text" : "password"}
+              value={details.password}
+              onChange={handleChange("password")}
+              error={errors.password && true}
+              helperText={errors.password && "Password Required !"}
+              endadornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {details.showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
               }
-            >
-              <Progress
-                color={color}
-                value={strength}
-                size={5}
-                style={{ marginBottom: 10 }}
-              />
-              <PasswordRequirement
-                label="Includes at least 6 characters"
-                meets={details.password.length > 5}
-              />
-              {checks}
-            </Popover>
+            />
           </Stack>
         </Container>
       </Box>
-      <Button variant="contained" >Login</Button>
+      <Button onClick={handlesubmit} variant="contained">
+        Login
+      </Button>
+      {alert}
     </Box>
   );
 }

@@ -1,9 +1,11 @@
 import { Box, Container, Divider, Stack, Typography } from "@mui/material";
 import React from "react";
+import { useStateValue } from "../store/StateProvider";
 import CheckoutCard from "./CheckoutCard";
 import CollectionCard from "./CollectionCard";
 
 function Payment() {
+  const [{ basket }] = useStateValue();
   return (
     <Box>
       <Container sx={{ marginTop: "15px" }}>
@@ -31,7 +33,18 @@ function Payment() {
           position="relative"
           flexWrap="wrap"
         >
-          {/* <CheckoutCard /> */}
+          {basket.map((item) => (
+            <CheckoutCard
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              price={item.price}
+              image={item.image}
+              rating={item.rating}
+              description={item.description}
+              quantity={item.quantity}
+            />
+          ))}
         </Box>
       </Box>
       <Divider />

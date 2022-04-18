@@ -1,14 +1,9 @@
-import {
-  Grid,
-  Link,
-  makeStyles,
-  Paper,
-  styled,
-  TextField,
-  InputAdornment
-} from "@material-ui/core";
+import { makeStyles, TextField, InputAdornment } from "@material-ui/core";
 import Box from "@mui/material/Box";
-import React, { useState } from "react";
+import validate from "../validations/Register";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import {
   Button,
   Container,
@@ -18,9 +13,16 @@ import {
   Stack,
   Typography
 } from "@mui/material";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { CheckIcon, Cross1Icon } from "@modulz/radix-icons";
-import { PasswordInput, Progress, Text, Popover } from "@mantine/core";
+import { Progress, Text, Popover } from "@mantine/core";
 function Register() {
   const [details, setDetails] = useState({
     username: "",
@@ -28,7 +30,10 @@ function Register() {
     email: "",
     showPassword: false
   });
-
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [errors, setErrors] = useState({});
   const handleChange = (prop) => (event) => {
     setDetails({ ...details, [prop]: event.target.value });
   };
@@ -57,6 +62,39 @@ function Register() {
       }
     })
   );
+
+  // register the user  and navigate to the products
+  const handleSubmit = (e) => {
+    setErrors(validate(details));
+    setIsSubmitting(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      // check if any validation errors are present
+      if (Object.keys(errors).length === 0 && isSubmitting) {
+        try {
+          const response = await axios.post("http://localhost:5000/register", {
+            username: details.username,
+            email: details.email,
+            password: details.password
+          });
+          window.location.reload();
+          navigate("/login");
+        } catch (err) {
+          alert(err.message);
+          console.log(err);
+          setOpen(true);
+        }
+      }
+    }
+    fetchData();
+  }, [errors]);
+
   function PasswordRequirement(_a) {
     var meets = _a.meets,
       label = _a.label;
@@ -89,7 +127,6 @@ function Register() {
     return Math.max(100 - (100 / (requirements.length + 1)) * multiplier, 10);
   }
   const [popoverOpened, setPopoverOpened] = useState(false);
-  const [value, setValue] = useState("");
   const checks = requirements.map((requirement, index) => (
     <PasswordRequirement
       key={index}
@@ -97,6 +134,25 @@ function Register() {
       meets={requirement.re.test(details.password)}
     />
   ));
+
+  const alert = (
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{"User Exist "}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          User already exist please login or create a new User
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Ok</Button>
+      </DialogActions>
+    </Dialog>
+  );
 
   const strength = getStrength(details.password);
   const color = strength === 100 ? "teal" : strength > 50 ? "yellow" : "red";
@@ -113,7 +169,7 @@ function Register() {
       border={"2px solid black"}
       sx={{ boxShadow: 10 }}
     >
-      <Container ml="" mr="100" >
+      <Container ml="" mr="100">
         <img
           className={classes.logo}
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuirahyitgSIy78EwdM52Lw9dM1aJ7sstWbXJTW5Kq1DQi8I33UdEaTnHzKPCMwTq1ePI&usqp=CAU"
@@ -137,6 +193,8 @@ function Register() {
               value={details.email}
               sx={{ m: 1, width: "25ch" }}
               onChange={handleChange("email")}
+              error={errors.email && true}
+              helperText={errors.email && `${errors.email} !`}
             />
 
             <TextField
@@ -146,6 +204,9 @@ function Register() {
               name="username"
               variant="outlined"
               size="small"
+              onChange={handleChange("username")}
+              error={errors.username && true}
+              helperText={errors.username && "Username Required !"}
             />
           </Stack>
           <Popover
@@ -165,11 +226,13 @@ function Register() {
                 label="Password"
                 variant="outlined"
                 size="small"
-                sx={{marginLeft:"auto",marginRight:"50px"}}
+                sx={{ marginLeft: "auto", marginRight: "50px" }}
                 type={details.showPassword ? "text" : "password"}
                 value={details.password}
                 onChange={handleChange("password")}
-                endAdornment={
+                error={errors.password && true}
+                helperText={errors.password && "Password Required !"}
+                endadornment={
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
@@ -202,8 +265,11 @@ function Register() {
           </Popover>
 
           <Container>
-            <Button variant="contained">Register</Button>
+            <Button type="submit" onClick={handleSubmit} variant="contained">
+              Register
+            </Button>
           </Container>
+          {alert}
         </Container>
       </Box>
     </Box>

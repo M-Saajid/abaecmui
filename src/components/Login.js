@@ -1,12 +1,4 @@
-import {
-  Grid,
-  Link,
-  makeStyles,
-  Paper,
-  styled,
-  TextField,
-  InputAdornment
-} from "@material-ui/core";
+import { makeStyles, TextField, InputAdornment } from "@material-ui/core";
 import Box from "@mui/material/Box";
 import React, { useState } from "react";
 import {
@@ -181,8 +173,7 @@ function Login() {
           </Stack>
         </Container>
       </Box>
-
-      <Button variant="contained">Login</Button>
+      <Button variant="contained" >Login</Button>
     </Box>
   );
 }

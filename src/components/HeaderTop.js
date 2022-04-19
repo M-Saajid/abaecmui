@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Drawer } from "@mantine/core";
+import { Checkbox, Drawer, Stack } from "@mantine/core";
 import {
   Avatar,
   Button,
@@ -17,17 +17,23 @@ import { Box } from "@mui/system";
 import { styled, alpha } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
+import { Check } from "@material-ui/icons";
+import { useNotifications } from "@mantine/notifications";
 
 function HeaderTop() {
+  const notifications = useNotifications();
+  const navigate = useNavigate();
+
   const userName = "";
   const pages = ["Login", "Register"];
   const settings = ["Account", "Logout"];
   const [opened, setOpened] = useState(false);
   const [pageView, setPageView] = useState();
   const [auth, setAuth] = useState("false");
+  const userLogedin = localStorage.getItem("createdUser");
   const navLink = ({ isActive }) => {
     return {
       textDecoration: isActive ? "none" : "none",
@@ -93,6 +99,24 @@ function HeaderTop() {
       }
     }
   }));
+  const logout = () => {
+    setOpened(false);
+    localStorage.clear();
+    navigate("/");
+    window.location.reload();
+    notifications.showNotification({
+      title: "Successfully Logout ",
+      message: "Thanks for choosing  ABAEC !",
+      icon: <Checkbox size={18} />,
+      color: "gray",
+      autoClose: 1000
+    });
+    // auth.logout();
+    // setOpened(false);
+    // localStorage.clear();
+    // navigate("/");
+    // window.location.reload();
+  };
   const check = () => {
     if (userName === "admin1200") {
       alert("im admin");
@@ -106,7 +130,7 @@ function HeaderTop() {
   };
 
   const authButton = (
-    <Box sx={{ flexGrow: 0, mb: 1.5, display: { xs: "none", md: "flex" } }}>
+    <Box sx={{ flexGrow: 0, mb: 1.5, display: { xs: "flex", md: "flex" } }}>
       <NavLink style={navLink} to="/login">
         <Button color="inherit">Login</Button>
       </NavLink>
@@ -143,11 +167,16 @@ function HeaderTop() {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        {settings.map((setting) => (
-          <MenuItem key={setting} onClick={handleCloseUserMenu}>
-            <Typography textAlign="center">{setting}</Typography>
-          </MenuItem>
-        ))}
+        {/* {settings.map((setting) => ( */}
+        <MenuItem onClick={handleCloseUserMenu}>
+          <Stack>
+            <Typography textAlign="center">Account</Typography>
+            <Typography onClick={logout} textAlign="center">
+              Logout
+            </Typography>
+          </Stack>
+        </MenuItem>
+        {/* ))} */}
       </Menu>
     </Box>
   );
@@ -224,7 +253,7 @@ function HeaderTop() {
             </Search>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
-          {auth ? authButton : authAvatar}
+          {!userLogedin ? authButton : authAvatar}
         </Toolbar>
       </AppBar>
     </div>

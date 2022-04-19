@@ -8,6 +8,9 @@ import CheckoutPage from "./components/CheckoutPage";
 import Payment from "./components/Payment";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import AdminPage from "./components/AdminPage";
+import AdminUpdatePage from "./components/AdminUpdatePage";
+import AddProduct from "./components/AddProduct";
 
 function App() {
   return (
@@ -21,6 +24,9 @@ function App() {
           <Route path="/payment" element={<Payment />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/updateproduct" element={<AdminUpdatePage />} />
+          <Route path="/addproduct" element={<AddProduct />} />
         </Routes>
       </div>
     </NotificationsProvider>

@@ -29,12 +29,6 @@ function AdminPage() {
   //submit the values added by the form
   const send = async (e) => {
     navigate("/addproduct");
-    // e.preventDefault();
-    // console.log("this is the file", files);
-
-    // setErrors(validate(details, files, values));
-    // setOpen(true);
-    // setIsSubmitting(true);
   };
 
   return (

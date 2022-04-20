@@ -7,10 +7,111 @@ import {
   Typography
 } from "@material-ui/core";
 import { Rating, Stack } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useStateValue } from "../store/StateProvider";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import validate from "../validations/UpdateProduct";
+import { useNotifications } from "@mantine/notifications";
+import { CheckIcon } from "@modulz/radix-icons";
 import { Paper } from "@mui/material";
 
 function AdminUpdatePage() {
+  const notifications = useNotifications();
+  const [{ updateBucket }] = useStateValue();
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errors, setErrors] = useState({});
+  const updateBucketItem = updateBucket[0];
+  const [files, setFiles] = useState();
+  const token = localStorage.getItem("jwt");
+  console.log("this is the tocken", token);
+
+  // constricting image url
+  const imageArray = updateBucket[0].image.split("/");
+  const imageUrl = `http://localhost:5000/${imageArray[1]}`;
+  console.log("this is  update bucket", updateBucket);
+
+  //setting details to previes value
+  const [details, setDetails] = useState({
+    title: updateBucketItem.title,
+    price: updateBucketItem.price,
+    desc: updateBucketItem.description,
+    rating: updateBucketItem.rating,
+    quantity: updateBucketItem.quantity,
+    category: updateBucketItem.category
+  });
+
+  const [values, setValues] = useState(updateBucket[0].rating);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDetails((prevValue) => {
+      return {
+        ...prevValue,
+        [name]: value
+      };
+    });
+  };
+
+  const send = async (e) => {
+    e.preventDefault();
+    setErrors(validate(details, files));
+    setIsSubmitting(true);
+  };
+
+  useEffect(() => {
+    async function fetchData() {
+      if (Object.keys(errors).length === 0 && isSubmitting) {
+        console.log("updating image", files);
+        const data = new FormData();
+        data.append("productImage", files);
+        data.append("title", details.title);
+        data.append("description", details.desc);
+        data.append("price", details.price);
+        data.append("rating", values);
+        data.append("quantity", details.quantity);
+        data.append("category", details.category);
+        console.log("this data in the image ", [...data]);
+        console.log("this is details of image", details);
+
+        // updating the item where  we get from the reducer UPDATE_BUCKET
+        try {
+          const response = await axios.patch(
+            `http://localhost:5000/api/items/${updateBucketItem.id}`,
+            data,
+            {
+              headers: { authorization: token }
+            }
+          );
+          console.log("this is api response ", response);
+
+          // notification settings
+          const id = notifications.showNotification({
+            loading: true,
+            title: "Updated the product",
+            message: "update successfull",
+            autoClose: false,
+            disallowClose: true
+          });
+          setTimeout(() => {
+            notifications.updateNotification(id, {
+              id,
+              color: "teal",
+              title: "Updated  the product",
+              icon: <CheckIcon />,
+              autoClose: 500
+            });
+          }, 500);
+        } catch (error) {
+          console.log(error);
+        }
+        navigate(-1);
+      }
+    }
+    fetchData();
+  }, [errors]);
+
   return (
     <Box
       pt={2}
@@ -24,7 +125,7 @@ function AdminUpdatePage() {
       border={"2px solid black"}
     >
       <Container>
-        <Typography variant="h5">title</Typography>
+        <Typography variant="h5">{details.title}</Typography>
         <TextField
           id="outlined-basic"
           label="tittle"
@@ -32,7 +133,7 @@ function AdminUpdatePage() {
           name="title"
           variant="outlined"
           size="small"
-          // onChange={handleChange}
+          onChange={handleChange}
           sx={{
             m: 1,
             width: "25ch",
@@ -58,7 +159,7 @@ function AdminUpdatePage() {
                 boxShadow: 100,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                backgroundImage: `url(https://www.thefashionisto.com/wp-content/uploads/2020/11/Stylish-Male-Model-Suit-Black-Shopping-Bag-Luxury.jpg)`
+                backgroundImage: `url(${imageUrl})`
               }}
             />
           </Box>
@@ -68,16 +169,15 @@ function AdminUpdatePage() {
               type="file"
               name="productImage"
               placeholder="Enter the title"
-              //   onChange={(event) => {
-              //     const file = event.target.files[0];
-              //     setFiles(file);
-              //   }}
+              onChange={(event) => {
+                const file = event.target.files[0];
+                setFiles(file);
+              }}
             />
           </Box>
         </Box>
         <Typography>
-          {" "}
-          asdasd <br></br>we have only <b>3333 PCS</b>{" "}
+          {details.desc} <br></br>we have only <b> {details.quantity} PCS</b>{" "}
         </Typography>
       </Container>
       <Box mb={2} />
@@ -92,7 +192,7 @@ function AdminUpdatePage() {
             name="desc"
             variant="outlined"
             size="small"
-            // onChange={handleChange}
+            onChange={handleChange}
             sx={{
               m: 1,
               width: "25ch",
@@ -107,7 +207,7 @@ function AdminUpdatePage() {
             name="Category"
             variant="outlined"
             size="small"
-            // onChange={handleChange}
+            onChange={handleChange}
             sx={{
               m: 1,
               width: "25ch",
@@ -116,15 +216,15 @@ function AdminUpdatePage() {
             }}
           />
           <TextField
-            // error={errors.quantity && true}
-            // helperText={errors.quantity && `${errors.quantity}`}
+            error={errors.quantity && true}
+            helperText={errors.quantity && `${errors.quantity}`}
             id="outlined-basic"
             label="quantity"
             placeholder="Enter the Quantity "
             name="quantity"
             variant="outlined"
             size="small"
-            // onChange={handleChange}
+            onChange={handleChange}
             sx={{
               m: 1,
               width: "25ch",
@@ -133,15 +233,15 @@ function AdminUpdatePage() {
             }}
           />
           <TextField
-            // error={errors.price && true}
-            // helperText={errors.price && `${errors.price}`}
+            error={errors.price && true}
+            helperText={errors.price && `${errors.price}`}
             id="outlined-basic"
             label="Price"
             placeholder="Enter the price "
             name="price"
             variant="outlined"
             size="small"
-            // onChange={handleChange}
+            onChange={handleChange}
             sx={{
               m: 1,
               width: "25ch",
@@ -152,19 +252,21 @@ function AdminUpdatePage() {
         </Stack>
       </Box>
       <Box mt={2}>
-        <Typography fontWeight={100}>LKR 55</Typography>
-        <Rating name="read-only" value={4} readOnly />
+        <Typography fontWeight={100}>LKR {details.price}</Typography>
+        <Rating name="read-only" value={details.rating} readOnly />
         <Typography component="legend">Set Rating </Typography>
         <Rating
           name="rate half-rating"
-          // value={values}
-          // onChange={(event, newValue) => {
-          //   setValues(newValue);
-          // }}
+          value={values}
+          onChange={(event, newValue) => {
+            setValues(newValue);
+          }}
         />
       </Box>
 
-      <Button variant="contained">Update</Button>
+      <Button onClick={send} variant="contained">
+        Update
+      </Button>
     </Box>
   );
 }

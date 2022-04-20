@@ -11,6 +11,11 @@ import Register from "./components/Register";
 import AdminPage from "./components/AdminPage";
 import AdminUpdatePage from "./components/AdminUpdatePage";
 import AddProduct from "./components/AddProduct";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+const promise = loadStripe(
+  "pk_test_51J887XGHMWtYg6xLPWmnzfUQWvaLVp4z3DE5k2pjp8ZDJlvD2DFTxUu0J83gkzaUSrriT9g88J5NXM6TMbyn57aP00jnr1t036"
+);
 
 function App() {
   return (
@@ -21,7 +26,14 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/collections" element={<Collections />} />
           <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/payment" element={<Payment />} />
+          <Route
+            path="/payment"
+            element={
+              <Elements stripe={promise}>
+                <Payment />
+              </Elements>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/admin" element={<AdminPage />} />

@@ -83,7 +83,7 @@ function Register() {
             email: details.email,
             password: details.password
           });
-          window.location.reload();
+          // window.location.reload();
           navigate("/login");
         } catch (err) {
           alert(err.message);

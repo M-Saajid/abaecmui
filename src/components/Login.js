@@ -1,5 +1,7 @@
 import { makeStyles, TextField, InputAdornment } from "@material-ui/core";
 import Box from "@mui/material/Box";
+import Link from "@mui/material/Link";
+
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -148,7 +150,7 @@ function Login() {
 
       <Box mb={5}>
         <Container>
-          <Stack>
+          <Stack mb={2}>
             <TextField
               className={classes.textField}
               id="outlined-basic"
@@ -186,6 +188,9 @@ function Login() {
               }
             />
           </Stack>
+          <Link sx={{ display: { md: "none" } }} href="#">
+            New user ? Create an Account
+          </Link>
         </Container>
       </Box>
       <Button onClick={handlesubmit} variant="contained">

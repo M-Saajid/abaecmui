@@ -97,7 +97,7 @@ function AddProduct() {
             });
           }, 1000);
 
-          navigate("/addminview");
+          navigate("/admin");
         } catch (error) {
           console.log(error);
         }

@@ -136,7 +136,9 @@ function HeaderTop(props) {
         <Button color="inherit">Login</Button>
       </NavLink>
       <NavLink style={navLink} to="/register">
-        <Button color="inherit">Register</Button>
+        <Button sx={{ display: { xs: "none", md: "flex" } }} color="inherit">
+          Register
+        </Button>
       </NavLink>
     </Box>
   );
@@ -223,7 +225,7 @@ function HeaderTop(props) {
               aria-label="account of current user"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={handleOpenNavMenu}
+              // onClick={handleOpenNavMenu}
               color="inherit"
             >
               <MenuIcon />

@@ -31,7 +31,7 @@ function Search() {
     fetchData();
   }, [searchResults]);
   return (
-    <Box>
+    <Box container  sx={{ display: "flex", justifyContent: "space-between" }}>
       {searchResults.length > 0 ? (
         searchResults.map((c) => {
           return (

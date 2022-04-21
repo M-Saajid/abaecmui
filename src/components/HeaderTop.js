@@ -23,7 +23,7 @@ import Register from "./Register";
 import { Check } from "@material-ui/icons";
 import { useNotifications } from "@mantine/notifications";
 
-function HeaderTop() {
+function HeaderTop(props) {
   const notifications = useNotifications();
   const navigate = useNavigate();
 
@@ -33,7 +33,8 @@ function HeaderTop() {
   const [opened, setOpened] = useState(false);
   const [pageView, setPageView] = useState();
   const [auth, setAuth] = useState("false");
-  const userLogedin = localStorage.getItem("createdUser");
+  const userLogedin = localStorage.getItem("user");
+  console.log(userLogedin);
   const navLink = ({ isActive }) => {
     return {
       textDecoration: isActive ? "none" : "none",
@@ -180,6 +181,18 @@ function HeaderTop() {
       </Menu>
     </Box>
   );
+  let search;
+  const { disabled } = props;
+  const onChange = (event) => {
+    search = event.target.value;
+    console.log("search values", search);
+  };
+  const send = (e) => {
+    if (e.key === "Enter") {
+      localStorage.setItem("searchkey", search);
+      navigate("/search");
+    }
+  };
   return (
     <div>
       <CssBaseline />
@@ -249,10 +262,14 @@ function HeaderTop() {
               <StyledInputBase
                 placeholder="Search…"
                 inputProps={{ "aria-label": "search" }}
+                disabled={disabled}
+                onChange={onChange}
+                onKeyPress={send}
               />
             </Search>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
+
           {!userLogedin ? authButton : authAvatar}
         </Toolbar>
       </AppBar>

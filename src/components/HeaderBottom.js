@@ -48,11 +48,13 @@ function HeaderBottom() {
         className={classes.gird}
       >
         <Grid item>
-          <img
-            src="https://seeklogo.com/images/P/phoenix-bird-logo-78F2C24DA2-seeklogo.com.png"
-            alt="Kitty Katty!"
-            className={classes.logo}
-          />
+          <NavLink style={navLink} to="/collections">
+            <img
+              src="https://seeklogo.com/images/P/phoenix-bird-logo-78F2C24DA2-seeklogo.com.png"
+              alt="Kitty Katty!"
+              className={classes.logo}
+            />
+          </NavLink>
         </Grid>
 
         <Grid item>

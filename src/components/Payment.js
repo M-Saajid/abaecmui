@@ -35,7 +35,7 @@ function Payment() {
     const getClientSecret = async () => {
       if (!basket.length == 0) {
         const response = await axios.post(
-          `http://localhost:5000/payment/create?total=${Baskettotal(basket)}`,
+          `http://localhost:5000/payment/create?total=${Baskettotal(basket)*100}`,
           { headers: { authorization: token } }
         );
         setClientSecret(response.data.clientSecret);
@@ -192,7 +192,7 @@ function Payment() {
               >
                 Thanks for choosing ABAEC ! E-recipt has sent for your E-mail
               </Alert>
-            </Snackbar>
+            </Snackbar>  
           </Box>
           {/* errors handling */}
           {error && <div>{error}</div>}

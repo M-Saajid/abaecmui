@@ -13,7 +13,6 @@ import AdminUpdatePage from "./components/AdminUpdatePage";
 import AddProduct from "./components/AddProduct";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import Search from "./components/Search";
 const promise = loadStripe(
   "pk_test_51J887XGHMWtYg6xLPWmnzfUQWvaLVp4z3DE5k2pjp8ZDJlvD2DFTxUu0J83gkzaUSrriT9g88J5NXM6TMbyn57aP00jnr1t036"
 );
@@ -40,7 +39,6 @@ function App() {
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/updateproduct" element={<AdminUpdatePage />} />
           <Route path="/addproduct" element={<AddProduct />} />
-          <Route path="/search" element={<Search />} />
         </Routes>
       </div>
     </NotificationsProvider>

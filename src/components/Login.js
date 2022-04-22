@@ -23,6 +23,7 @@ import {
   DialogTitle
 } from "@material-ui/core";
 import { useNotifications } from "@mantine/notifications";
+// import { useAuth } from "./auth";
 
 function Login() {
   const [errors, setErrors] = useState({});
@@ -30,7 +31,7 @@ function Login() {
   const [open, setOpen] = useState(false);
   const notifications = useNotifications();
   const navigate = useNavigate();
-
+  // const auth = useAuth();
   const [details, setDetails] = useState({
     username: "",
     password: "",

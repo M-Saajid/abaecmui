@@ -24,7 +24,7 @@ function AdminPage() {
       }
     }
     fetchData();
-  }, [itemDetail]);
+  }, []);
 
   //submit the values added by the form
   const send = async (e) => {

@@ -14,7 +14,7 @@ import {
 import { Check, Visibility, VisibilityOff } from "@mui/icons-material";
 import validate from "../validations/Login";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Dialog,
   DialogActions,
@@ -189,9 +189,11 @@ function Login() {
               }
             />
           </Stack>
-          <Link sx={{ display: { md: "none" } }} href="#">
-            New user ? Create an Account
-          </Link>
+          <NavLink to="/register" activeClassName="selected">
+            <Link sx={{ display: { md: "none" } }} href="#">
+              New user ? Create an Account
+            </Link>
+          </NavLink>
         </Container>
       </Box>
       <Button onClick={handlesubmit} variant="contained">

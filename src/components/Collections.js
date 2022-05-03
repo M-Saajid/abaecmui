@@ -10,7 +10,7 @@ function Collections() {
   // view all product
   useEffect(() => {
     async function fetchData() {
-      const request = await axios.get("http://localhost:5000/api/items/");
+      const request = await axios.get(`${process.env.REACT_APP_BASE_URL}/api/items/`);
       setitemDetail(request.data.data.foundItems);
       return request;
     }

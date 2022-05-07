@@ -140,6 +140,7 @@ function Login() {
       ml="auto"
       mr="auto"
       mt={20}
+      mb={"50px"}
       border={"2px solid black"}
       sx={{ boxShadow: 10 }}
     >
@@ -181,7 +182,7 @@ function Login() {
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
-                    edge="end"
+                    edge="end"  
                   >
                     {details.showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>

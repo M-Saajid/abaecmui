@@ -325,52 +325,53 @@ function HomePage() {
           height="400px"
           bgcolor={"rgba(184, 147, 149, 0.13)"}
         >
-          <Container fixed>
-            <img
-              src="https://seeklogo.com/images/P/phoenix-bird-logo-78F2C24DA2-seeklogo.com.png"
-              alt="Kitty Katty!"
-              className={classes.logo}
-            />
+          <Container fixed >
+          <img
+            src="https://seeklogo.com/images/P/phoenix-bird-logo-78F2C24DA2-seeklogo.com.png"
+            alt="Kitty Katty!"
+            className={classes.logo}
+          />
           </Container>
-
-          <Grid container spacing={12}>
-            <Grid item xs={4}>
-              <Container>
-                <Typography variant="body1" fontWeight={800}>
-                  Product
-                </Typography>
-                <Stack mt={10} spacing={5}>
-                  <Typography>Watch</Typography>
-                  <Typography>Shirts</Typography>
-                  <Typography>Denium</Typography>
-                </Stack>
-              </Container>
+          <Container absolute>
+            <Grid container spacing={ 3}>
+              <Grid item xs={4}>
+                <Container>
+                  <Typography variant="body1" fontWeight={800}>
+                    Product
+                  </Typography>
+                  <Stack mt={10} spacing={5}>
+                    <Typography>Watch</Typography>
+                    <Typography>Shirts</Typography>
+                    <Typography>Denium</Typography>
+                  </Stack>
+                </Container>
+              </Grid>
+              <Grid item xs={4}>
+                <Container>
+                  <Typography variant="body1" fontWeight={800}>
+                    Company
+                  </Typography>
+                  <Stack mt={10} spacing={5}>
+                    <Typography>About </Typography>
+                    <Typography>Press</Typography>
+                    <Typography>Careers</Typography>
+                  </Stack>
+                </Container>
+              </Grid>
+              <Grid item xs={4}>
+                <Container>
+                  <Typography variant="body1" fontWeight={800}>
+                    Services
+                  </Typography>
+                  <Stack mt={10} spacing={5}>
+                    <Typography>Contact</Typography>
+                    <Typography>Shipping</Typography>
+                    <Typography>Returns</Typography>
+                  </Stack>
+                </Container>
+              </Grid>
             </Grid>
-            <Grid item xs={4}>
-              <Container>
-                <Typography variant="body1" fontWeight={800}>
-                  Company
-                </Typography>
-                <Stack mt={10} spacing={5}>
-                  <Typography>About us</Typography>
-                  <Typography>Press</Typography>
-                  <Typography>Careers</Typography>
-                </Stack>
-              </Container>
-            </Grid>
-            <Grid item xs={4}>
-              <Container>
-                <Typography variant="body1" fontWeight={800}>
-                  Services
-                </Typography>
-                <Stack mt={10} spacing={5}>
-                  <Typography>Contact</Typography>
-                  <Typography>Shipping</Typography>
-                  <Typography>Returns</Typography>
-                </Stack>
-              </Container>
-            </Grid>
-          </Grid>
+          </Container>
         </Box>
       </Box>
     </>

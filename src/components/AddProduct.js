@@ -64,7 +64,7 @@ function AddProduct() {
       if (Object.keys(errors).length === 0 && isSubmitting && files) {
         const data = new FormData();
         data.append("title", details.title);
-        data.append("description", details.desc);
+        data.append("description", details.desc);  
         data.append("price", details.price);
         data.append("rating", values);
         data.append("quantity", details.quantity);
@@ -75,7 +75,7 @@ function AddProduct() {
             `http://localhost:5000/api/items`,
             data,
             {
-              headers: { authorization: token }
+              headers: { authorization: token }    
             }
           );
           console.log(response);

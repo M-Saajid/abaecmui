@@ -31,7 +31,7 @@ function CheckoutCard(props) {
   //steps to  access the image through url
   const fileUrl = props.image.replace(/\\/g, "/");
   const imageArray = fileUrl.split("/");
-  const imageUrl = `${"http://localhost:5000"}/${imageArray[1]}`;
+  const imageUrl = `${process.env.REACT_APP_BASE_URL}/${imageArray[1]}`;
 
   return (
     <Box mt={5} ml={"auto"} mr={"auto"} width="300px">

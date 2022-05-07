@@ -29,7 +29,7 @@ function AdminUpdatePage() {
 
   // constricting image url
   const imageArray = updateBucket[0].image.split("/");
-  const imageUrl = `http://localhost:5000/${imageArray[1]}`;
+  const imageUrl = `${process.env.REACT_APP_BASE_URL}/${imageArray[1]}`;
   console.log("this is  update bucket", updateBucket);
 
   //setting details to previes value
@@ -78,7 +78,7 @@ function AdminUpdatePage() {
         // updating the item where  we get from the reducer UPDATE_BUCKET
         try {
           const response = await axios.patch(
-            `http://localhost:5000/api/items/${updateBucketItem.id}`,
+            `${process.env.REACT_APP_BASE_URL}/api/items/${updateBucketItem.id}`,
             data,
             {
               headers: { authorization: token }

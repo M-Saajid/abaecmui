@@ -75,10 +75,13 @@ function Login() {
     async function fetchData() {
       if (Object.keys(errors).length === 0 && isSubmitting) {
         try {
-          const response = await axios.post(" http://localhost:5000/login", {
-            username: details.username,
-            password: details.password
-          });
+          const response = await axios.post(
+            ` ${process.env.REACT_APP_BASE_URL}/login`,
+            {
+              username: details.username,
+              password: details.password
+            }
+          );
           notifications.showNotification({
             title: "Successfully login ",
             message: "Welcome to ABAEC !",
@@ -92,7 +95,7 @@ function Login() {
 
           // auth.login(response.data.data);
           const results = await axios.post(
-            "http://localhost:5000/api/searchcus",
+            `${process.env.REACT_APP_BASE_URL}/api/searchcus`,
             {
               username: details.username
             }
@@ -182,7 +185,7 @@ function Login() {
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
-                    edge="end"  
+                    edge="end"
                   >
                     {details.showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>

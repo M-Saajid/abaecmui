@@ -6,7 +6,6 @@ import reducer, { initialState } from "../store/reducer";
 import { StateProvider, useStateValue } from "../store/StateProvider";
 function CheckoutpageLeft() {
   const [{ basket }] = useStateValue();
-  // const basket = [1, 3, 2, 4];
 
   const subtitle = (
     <Typography variant="subtitle1">

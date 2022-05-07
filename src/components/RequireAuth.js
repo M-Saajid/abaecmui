@@ -6,10 +6,9 @@ import Login from "./Login";
 export const RequireAuth = ({ children }) => {
   const user = localStorage.getItem("user");
 
-  if (user === "admin1200") {
-    <Navigate to="/admin" />;
+  if (user === `${process.env.REACT_APP_ADMIN}`) {
+    return <Navigate to="/admin" />;
   } else {
     return <Navigate to="/login" />;
   }
-  return children;
 };

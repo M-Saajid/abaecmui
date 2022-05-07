@@ -42,7 +42,7 @@ function AdminCard(props) {
   const DeleteItem = async () => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/items/${props.id}`,
+        `${process.env.REACT_APP_BASE_URL}/api/items/${props.id}`,
         {
           headers: { authorization: token }
         }
@@ -75,7 +75,7 @@ function AdminCard(props) {
   //steps to  access the image through url
   const fileUrl = props.image.replace(/\\/g, "/");
   const imageArray = fileUrl.split("/");
-  const imageUrl = `http://localhost:5000/${imageArray[1]}`;
+  const imageUrl = `${process.env.REACT_APP_BASE_URL}/${imageArray[1]}`;
   console.log("this is image in card", imageUrl);
   return (
     <>

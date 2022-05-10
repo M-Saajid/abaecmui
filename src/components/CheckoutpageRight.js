@@ -4,18 +4,20 @@ import CurrencyFormat from "react-currency-format";
 import { Baskettotal } from "../store/reducer";
 import { useNavigate } from "react-router-dom";
 import { useStateValue } from "../store/StateProvider";
-const userName = "sk";
+
 function CheckoutpageRight() {
   const navigate = useNavigate();
+  const userLogedin = localStorage.getItem("user");
   const [{ basket }] = useStateValue();
   const userExist = () => {
-    if (userName) {
+    if (userLogedin) {
       if (basket.length > 0) {
         navigate("/payment");
       } else {
         navigate("/collections");
       }
     } else {
+      navigate("/login")
     }
   };
   return (

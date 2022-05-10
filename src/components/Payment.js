@@ -35,7 +35,7 @@ function Payment() {
     const getClientSecret = async () => {
       if (!basket.length == 0) {
         const response = await axios.post(
-          `http://localhost:5000/payment/create?total=${Baskettotal(basket)*100}`,
+          `${process.env.REACT_APP_BASE_URL}/payment/create?total=${Baskettotal(basket)*100}`,
           { headers: { authorization: token } }
         );
         setClientSecret(response.data.clientSecret);
@@ -76,7 +76,7 @@ function Payment() {
       console.log("this is user tocken", Email);
 
       await axios.post(
-        `http://localhost:5000/api/mail`,
+        `${process.env.REACT_APP_BASE_URL}/api/mail`,
         {
           Cusemail: Email,
           price: Baskettotal(basket)
@@ -90,7 +90,7 @@ function Payment() {
       {
         basket.map(async (item) => {
           const response = await axios.patch(
-            `http://localhost:5000/api/stockUpdate/${item.id}`
+            `${process.env.REACT_APP_BASE_URL}/api/stockUpdate/${item.id}`
           );
         });
       }

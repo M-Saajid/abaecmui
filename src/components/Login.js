@@ -75,7 +75,7 @@ function Login() {
     async function fetchData() {
       if (Object.keys(errors).length === 0 && isSubmitting) {
         try {
-          const response = await axios.post(" http://localhost:5000/login", {
+          const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/login`, {
             username: details.username,
             password: details.password
           });
@@ -92,7 +92,7 @@ function Login() {
 
           // auth.login(response.data.data);
           const results = await axios.post(
-            "http://localhost:5000/api/searchcus",
+            `${process.env.REACT_APP_BASE_URL}/api/searchcus`,
             {
               username: details.username
             }

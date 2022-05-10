@@ -78,7 +78,7 @@ function Register() {
       // check if any validation errors are present
       if (Object.keys(errors).length === 0 && isSubmitting) {
         try {
-          const response = await axios.post("http://localhost:5000/register", {
+          const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/register`, {
             username: details.username,
             email: details.email,
             password: details.password
